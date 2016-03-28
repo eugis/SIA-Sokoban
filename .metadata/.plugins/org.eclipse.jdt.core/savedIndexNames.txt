@@ -1,0 +1,21 @@
+INDEX VERSION 1.127+/Users/mariaeugenia/Documents/SIA-Sokoban/.metadata/.plugins/org.eclipse.jdt.core
+3112420618.index
+3569674952.index
+1271342938.index
+4035515634.index
+2151740375.index
+3397246344.index
+4030189359.index
+359225253.index
+2786418607.index
+3543600905.index
+3244578674.index
+19412829.index
+962534205.index
+50343090.index
+1744008346.index
+2706036563.index
+1688016717.index
+2406541632.index
+916446601.index
+591859058.index
