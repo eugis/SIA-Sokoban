@@ -1,0 +1,9 @@
+package model;
+
+public class Square {
+	
+	private boolean player, box;
+	
+	
+	Empty, Player, Box, Wall, Goal;
+}

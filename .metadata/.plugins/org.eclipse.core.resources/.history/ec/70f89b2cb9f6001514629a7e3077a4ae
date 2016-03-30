@@ -1,0 +1,20 @@
+package model;
+
+public class Square {
+	
+	private boolean player, box;
+	
+	private SquareType type;
+	
+	public String toString(){
+		
+		switch(type){
+			case Wall:
+				return "w";
+			case Empty:
+				if(player) return "p";
+		}
+		
+	}
+	
+}

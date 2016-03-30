@@ -1,0 +1,20 @@
+package model;
+
+public class Square {
+	
+	private char visitor;
+	
+	private SquareType type;
+	
+	public String toString(){
+		
+		switch(type){
+			case Wall:
+				return 'a';
+			case Empty:
+				if(player) return "p";
+		}
+		
+	}
+	
+}

@@ -1,0 +1,25 @@
+package model;
+
+public class Square {
+	
+	private boolean player, box;
+	
+	private SquareType type;
+	
+	public String toString(){
+		switch(type){
+			case Wall:
+				return "w";
+			case Empty:
+				if(player) return "p";
+				if(box) return "b";
+				return " ";
+			case Goal:
+				if(player) return "P";
+				if(box) return "B";
+				return "G";
+		}
+		throw new RuntimeException("Cannot convert Square to String");
+	}
+	
+}

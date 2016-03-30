@@ -5,6 +5,7 @@ import gps.SearchStrategy;
 import gps.api.GPSProblem;
 import gps.api.GPSRule;
 import gps.api.GPSState;
+import model.Direction;
 
 import java.util.LinkedList;
 import java.util.List;
