@@ -36,9 +36,9 @@ public class PuzzleRule implements GPSRule {
 		if (destination.getX() < 0 || destination.getX() >= PuzzleState.LENGTH || destination.getY() < 0 || destination.getY() >= PuzzleState.LENGTH) {
 			throw new NotAppliableException();
 		}
-//		int[][] newMap = Copies.deepCopy(puzzleState.map);
-//		newMap[blank.x][blank.y] = newMap[destination.x][destination.y];
-//		newMap[destination.x][destination.y] = PuzzleState.BLANK;
-//		return new PuzzleState(newMap);
+		int[][] newMap = Copies.deepCopy(puzzleState.map);
+		newMap[blank.x][blank.y] = newMap[destination.x][destination.y];
+		newMap[destination.x][destination.y] = PuzzleState.BLANK;
+		return new PuzzleState(newMap);
 	}
 }

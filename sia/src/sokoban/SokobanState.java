@@ -14,6 +14,11 @@ public class SokobanState implements GPSState {
 	private Square[][] board;
 	private Point playerPosition;
 	
+	public SokobanState(Square[][] board, Point playerPosition) {
+		this.board = board;
+		this.playerPosition = playerPosition;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -24,8 +29,6 @@ public class SokobanState implements GPSState {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
@@ -42,21 +45,21 @@ public class SokobanState implements GPSState {
 	
 	@Override
 	public SokobanState clone(){
-		SokobanState ss = new SokobanState();
-		ss.board = Copies.deepCopy(this.board);
-		ss.playerPosition = this.playerPosition;
+		Square[][] newBoard = Copies.deepCopy(this.board); 
+		SokobanState ss = new SokobanState(newBoard, new Point(playerPosition.x, playerPosition.y));
 		return ss;
 	}
 	
 	public void move(Direction dir) throws NotAppliableException{
 		int x = playerPosition.x;
 		int y = playerPosition.y;
-		int dx = x+dir.getDelta().x;
-		int dy = x+dir.getDelta().y;
+		playerPosition.translate(dir.getDelta().x, dir.getDelta().y);
+		int dx = playerPosition.x;
+		int dy = playerPosition.y;
 		Square sq = board[dx][dy]; 
 		if(sq.isBox()){
 			int ddx = x+dir.getDelta().x*2;
-			int ddy = x+dir.getDelta().y*2;
+			int ddy = y+dir.getDelta().y*2;
 			Square dsq = board[ddx][ddy];
 			if(dsq.isEmpty()){
 				dsq.setBox();
@@ -82,4 +85,16 @@ public class SokobanState implements GPSState {
 		this.playerPosition = playerPosition;
 	}	
 	
+	@Override
+	public String toString() {
+		StringBuilder boardString = new StringBuilder();
+		boardString.append('\n');
+		for (Square[] squareLine: board) {
+			for (Square square: squareLine) {
+				boardString.append(square.toString());
+			}
+			boardString.append('\n');
+		}
+		return boardString.toString();
+	}
 }

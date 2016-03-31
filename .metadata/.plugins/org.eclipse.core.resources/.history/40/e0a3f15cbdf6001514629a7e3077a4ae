@@ -1,7 +1,0 @@
-package sokoban;
-
-import gps.api.GPSProblem;
-
-public class SokobanProblem implements GPSProblem { 
-
-}

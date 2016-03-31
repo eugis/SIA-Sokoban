@@ -1,9 +1,0 @@
-package model;
-
-public class Square {
-	
-	private boolean player, box;
-	
-	private SquareType type;
-	
-}

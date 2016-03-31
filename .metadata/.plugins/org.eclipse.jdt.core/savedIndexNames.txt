@@ -1,2 +1,0 @@
-INDEX VERSION 1.127+/Users/mariaeugenia/Documents/SIA-Sokoban/.metadata/.plugins/org.eclipse.jdt.core
-19412829.index
