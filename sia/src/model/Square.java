@@ -12,6 +12,14 @@ public class Square {
 		this.box = box;
 	}
 	
+	public boolean canBeBlocked(){
+		return type==SquareType.Wall || box;
+	}
+	
+	public boolean isBoxInNotGoal(){
+		return box && type!=SquareType.Goal;
+	}
+	
 	public boolean isEmpty(){
 		return type!=SquareType.Wall && !player && !box;
 	}

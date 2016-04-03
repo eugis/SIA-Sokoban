@@ -7,7 +7,6 @@ import gps.api.GPSRule;
 import gps.api.GPSState;
 
 import java.awt.Point;
-import java.io.ObjectInputStream.GetField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -24,7 +23,7 @@ public class SokobanProblem implements GPSProblem {
 	public static void main(String[] args) {
 		engine = new SokobanEngine();
 		try {
-			engine.engine(new SokobanProblem(), SearchStrategy.ASTAR);
+			engine.engine(new SokobanProblem(), SearchStrategy.GREEDY);
 		} catch (StackOverflowError e) {
 			System.out.println("Solution (if any) too deep for stack.");
 		}
@@ -112,15 +111,14 @@ public class SokobanProblem implements GPSProblem {
 		int[][] dist = new int[rows][columns];
 		for(int i=0; i<rows; i++){
 			for(int j=0; j<columns; j++){
-				/*dist[i][j] = Integer.MAX_VALUE;
-				if (board[i][j].isGoal()) {
-					if (board[i][j].isBox()) {
-						dist[i][j] = -100;
-					} else {
-						queue.add(new Point(i, j));
-						dist[i][j] = 0;
+				
+				if(i<rows-1 && j<columns-1){
+					if(board[i][j].canBeBlocked() && board[i][j+1].canBeBlocked() && board[i+1][j].canBeBlocked() && board[i+1][j+1].canBeBlocked()){
+						if(board[i][j].isBoxInNotGoal() || board[i][j+1].isBoxInNotGoal() || board[i+1][j].isBoxInNotGoal() || board[i+1][j+1].isBoxInNotGoal())
+							return Integer.MAX_VALUE/2; 
 					}
-				}*/
+				}
+				
 				dist[i][j] = Integer.MAX_VALUE;
 				if (board[i][j].isGoal()) {
 					queue.add(new Point(i, j));
@@ -159,7 +157,7 @@ public class SokobanProblem implements GPSProblem {
 				}
 			}
 		}
-		return ans+minDistPlayer;
+		return ans+(minDistPlayer)/2;
 	}
 
 }
