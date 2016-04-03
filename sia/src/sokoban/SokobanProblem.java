@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+import utils.Hungarian;
 import model.Direction;
 import model.Square;
 import model.SquareType;
@@ -112,15 +113,6 @@ public class SokobanProblem implements GPSProblem {
 		int[][] dist = new int[rows][columns];
 		for(int i=0; i<rows; i++){
 			for(int j=0; j<columns; j++){
-				/*dist[i][j] = Integer.MAX_VALUE;
-				if (board[i][j].isGoal()) {
-					if (board[i][j].isBox()) {
-						dist[i][j] = -100;
-					} else {
-						queue.add(new Point(i, j));
-						dist[i][j] = 0;
-					}
-				}*/
 				dist[i][j] = Integer.MAX_VALUE;
 				if (board[i][j].isGoal()) {
 					queue.add(new Point(i, j));

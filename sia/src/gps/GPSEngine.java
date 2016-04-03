@@ -42,7 +42,7 @@ public abstract class GPSEngine {
 					System.out.println("Solution cost: " + currentNode.getCost());
 				} else {
 					explosionCounter++;
-				/*	if(Math.random()<0.5)
+					/*if(explosionCounter%1000==0)
 					{System.out.println("Intermedio");
 					System.out.println(currentNode.getState());}*/
 					explode(currentNode);
