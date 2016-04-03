@@ -46,6 +46,7 @@ public class SokobanState implements GPSState {
 	@Override
 	public SokobanState clone(){
 		Square[][] newBoard = Copies.deepCopy(this.board); 
+		
 		SokobanState ss = new SokobanState(newBoard, new Point(playerPosition.x, playerPosition.y));
 		return ss;
 	}

@@ -7,8 +7,10 @@ import gps.api.GPSRule;
 import gps.api.GPSState;
 
 import java.awt.Point;
+import java.io.ObjectInputStream.GetField;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 import model.Direction;
@@ -22,22 +24,25 @@ public class SokobanProblem implements GPSProblem {
 	public static void main(String[] args) {
 		engine = new SokobanEngine();
 		try {
-			engine.engine(new SokobanProblem(), SearchStrategy.BFS);
+			engine.engine(new SokobanProblem(), SearchStrategy.ASTAR);
 		} catch (StackOverflowError e) {
 			System.out.println("Solution (if any) too deep for stack.");
 		}
+		/*SokobanProblem a = new SokobanProblem();
+		System.out.println(a.getHValue(a.getInitState()));*/
 	}
 
 	@Override
 	public GPSState getInitState() {
 		Scanner s = new Scanner(System.in);
-		int size = s.nextInt();
+		int rows = s.nextInt();
+		int columns = s.nextInt();
 		s.nextLine();
-		Square[][] map = new Square[size][size];
+		Square[][] map = new Square[rows][columns];
 		Point playerPosition = null;
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < rows; i++) {
 			String nextLine = s.nextLine();
-			for (int j = 0; j < size; j++) {
+			for (int j = 0; j < columns; j++) {
 				char nextChar = Character.toLowerCase(nextLine.charAt(j));
 				if (nextChar == 'p') {
 					playerPosition = new Point(i, j);
@@ -58,8 +63,12 @@ public class SokobanProblem implements GPSProblem {
 			return new Square(SquareType.Wall, false, false);
 		case ' ':
 			return new Square(SquareType.Empty, false, false);
+		case 'B':
+			return new Square(SquareType.Goal, false, true);
 		case 'b':
 			return new Square(SquareType.Empty, false, true);
+		case 'P':
+			return new Square(SquareType.Goal, true, false);
 		case 'p':
 			return new Square(SquareType.Empty, true, false);
 		case 'g':
@@ -94,7 +103,63 @@ public class SokobanProblem implements GPSProblem {
 	// Valor Heurística para A*
 	@Override
 	public Integer getHValue(GPSState state) {
-		return 0;
+		Queue<Point> queue = new LinkedList<Point>();
+		SokobanState ss = (SokobanState) state;
+		Square[][] board = ss.getBoard();
+		
+		int rows = board.length;
+		int columns = board[0].length;
+		int[][] dist = new int[rows][columns];
+		for(int i=0; i<rows; i++){
+			for(int j=0; j<columns; j++){
+				/*dist[i][j] = Integer.MAX_VALUE;
+				if (board[i][j].isGoal()) {
+					if (board[i][j].isBox()) {
+						dist[i][j] = -100;
+					} else {
+						queue.add(new Point(i, j));
+						dist[i][j] = 0;
+					}
+				}*/
+				dist[i][j] = Integer.MAX_VALUE;
+				if (board[i][j].isGoal()) {
+					queue.add(new Point(i, j));
+					dist[i][j] = 0;
+				}
+			}
+		}
+
+		int[] dx = {0,1,0,-1,0};
+		int[] dy = {1, 0, -1, 0,1};
+		while(!queue.isEmpty()){
+			Point curr = queue.remove();
+			int x = curr.x;
+			int y = curr.y;
+			for(int i=0; i<4; i++){
+				if(!board[x+dx[i]][y+dy[i]].isWall()){
+					if(dist[x][y]+1 < dist[x+dx[i]][y+dy[i]]){
+						dist[x+dx[i]][y+dy[i]]=dist[x][y]+1;
+						queue.add(new Point(x+dx[i],y+dy[i]));
+					}
+				}
+			}
+		}
+		int ans = 0;
+		Point playerPoint = ss.getPlayerPosition();
+		int minDistPlayer = Integer.MAX_VALUE;
+		for(int i=0; i<rows; i++){
+			for(int j=0; j<columns; j++){
+				if(board[i][j].isBox()){
+					minDistPlayer=Math.min(minDistPlayer, Math.abs(playerPoint.x-i)+Math.abs(playerPoint.y-j));
+					for(int k=0; k<4; k++){
+						if(board[i+dx[k]][j+dy[k]].isWall() && board[i+dx[k+1]][j+dy[k+1]].isWall() && !board[i][j].isGoal())
+							return Integer.MAX_VALUE/2;
+					}
+					ans+=dist[i][j];
+				}
+			}
+		}
+		return ans+minDistPlayer;
 	}
 
 }

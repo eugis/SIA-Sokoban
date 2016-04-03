@@ -16,18 +16,18 @@ class SokobanEngine extends GPSEngine {
 			public int compare(GPSNode o1, GPSNode o2) {
 				switch (strategy) {
 				case BFS:
-					return getCost(o1) - getCost(o2);
+					return o1.getCost() - o2.getCost();
 				case DFS:
-					return getCost(o2) - getCost(o1);
+					return o2.getCost() - o1.getCost();
 				case IDDFS:
 					// IDDFS Condition
 					return 0;
 				case GREEDY:
-					// Greedy Condition
-					return 0;
+					return (problem.getHValue(o1.getState()))
+							- (problem.getHValue(o2.getState()));
 				case ASTAR:
-					// AStar Condition
-					return 0;
+					return (problem.getHValue(o1.getState()) + o1.getCost())
+							- (problem.getHValue(o2.getState()) + o2.getCost());
 				default:
 					return 0;
 				}

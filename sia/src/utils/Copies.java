@@ -8,7 +8,7 @@ public class Copies {
 		Square[][] ret = new Square[param.length][];
 		for (int i = 0; i < param.length; i++) {
 			ret[i] = new Square[param[i].length];
-			for (int j = 0; j < param.length; j++) {
+			for (int j = 0; j < param[0].length; j++) {
 				ret[i][j] = param[i][j].clone();
 			}
 		}
