@@ -1,16 +1,17 @@
 package sokoban;
 
-import gps.GPSEngine;
-import gps.GPSNode;
-
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import model.Square;
+import gps.GPSEngine;
+import gps.GPSNode;
+import gps.SearchStrategy;
+import gps.api.GPSProblem;
 
 class SokobanEngine extends GPSEngine {
-
+	
 	public SokobanEngine() {
+		
 		open = new PriorityQueue<GPSNode>(new Comparator<GPSNode>() {
 			@Override
 			public int compare(GPSNode o1, GPSNode o2) {
@@ -20,8 +21,7 @@ class SokobanEngine extends GPSEngine {
 				case DFS:
 					return o2.getCost() - o1.getCost();
 				case IDDFS:
-					// IDDFS Condition
-					return 0;
+					return o2.getCost() - o1.getCost();
 				case GREEDY:
 					return (problem.getHValue(o1.getState()))
 							- (problem.getHValue(o2.getState()));
@@ -37,14 +37,14 @@ class SokobanEngine extends GPSEngine {
 	
 	private int getCost(GPSNode node) {
 		int cost = node.getCost();
-		SokobanState state = (SokobanState) node.getState();
+		/*SokobanState state = (SokobanState) node.getState();
 		for (Square[] squareLine: state.getBoard()) {
 			for (Square square: squareLine) {
 				if (square.isGoal() && square.isBox()) {
 					cost -= 100;
 				}
 			}
-		}
+		}*/
 		return cost;
 	}
 

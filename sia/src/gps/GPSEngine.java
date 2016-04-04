@@ -18,16 +18,27 @@ public abstract class GPSEngine {
 
 	// Use this variable in open set order.
 	protected SearchStrategy strategy;
+	private long analyzedCounter;
+	private long initTime;
+	private long explosionCounter;
+	protected long depth;
 
-	public void engine(GPSProblem myProblem, SearchStrategy myStrategy) {
-
+	public GPSEngine() {
+		initTime = System.currentTimeMillis();
+		explosionCounter = 0;
+		analyzedCounter = 0;
+	}
+	
+	public boolean engine(GPSProblem myProblem, SearchStrategy myStrategy, long depth) {
+		open.clear();
+		bestCosts.clear();
+		this.depth=depth;
 		problem = myProblem;
 		strategy = myStrategy;
-
 		GPSNode rootNode = new GPSNode(problem.getInitState(), 0);
 		boolean finished = false;
 		boolean failed = false;
-		long explosionCounter = 0;
+		
 		open.add(rootNode);
 		bestCosts.put(rootNode.getState(), 0);
 		while (!failed && !finished) {
@@ -38,27 +49,40 @@ public abstract class GPSEngine {
 				if (problem.isGoal(currentNode.getState())) {
 					finished = true;
 					System.out.println(currentNode.getSolution());
+
+					//TODO: parametro iniciales
+					System.out.println("Analyzed nodes: " + analyzedCounter);
 					System.out.println("Expanded nodes: " + explosionCounter);
+					System.out.println("Border nodes: " + open.size());
+					System.out.println("Solution deep: " + currentNode.getCost());
 					System.out.println("Solution cost: " + currentNode.getCost());
+					System.out.println("Solution time: "+(System.currentTimeMillis()-initTime)+" ms");
 				} else {
 					explosionCounter++;
-					if(explosionCounter%5000==0)
-					{System.out.println(explosionCounter);
+					if (explosionCounter % 5000 == 0) {
+						System.out.println(explosionCounter);
 						System.out.println("Intermedio");
-					System.out.println(currentNode.getState());}
+						System.out.println(currentNode.getState());
+					}
 					explode(currentNode);
 				}
 			}
 		}
 		if (finished) {
 			System.out.println("OK! solution found!");
-		} else if (failed) {
+			return true;
+		} else if (failed && (strategy!=SearchStrategy.IDDFS)) {
 			System.err.println("FAILED! solution not found!");
+			return false;
 		}
+		return false;
 	}
 
 	private boolean explode(GPSNode node) {
-		if(bestCosts.containsKey(node) && bestCosts.get(node.getState()) <= node.getCost()){
+		if (node.getCost()>=depth) {
+			return false;
+		}
+		if (bestCosts.containsKey(node) && bestCosts.get(node.getState()) <= node.getCost()) {
 			return false;
 		}
 		updateBest(node);
@@ -83,6 +107,7 @@ public abstract class GPSEngine {
 	}
 
 	private boolean isBest(GPSState state, Integer cost) {
+		analyzedCounter++;
 		return !bestCosts.containsKey(state) || cost < bestCosts.get(state);
 	}
 

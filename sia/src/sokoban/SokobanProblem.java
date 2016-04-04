@@ -19,11 +19,26 @@ import model.SquareType;
 public class SokobanProblem implements GPSProblem {
 
 	static GPSEngine engine;
+	private GPSState initState;
+	
+	public SokobanProblem() {
+		initializeState();
+	}
 
 	public static void main(String[] args) {
 		engine = new SokobanEngine();
+		SokobanProblem problem = new SokobanProblem();
+		SearchStrategy strategy = SearchStrategy.ASTAR; //TODO: Levantar strategy desde properties.
 		try {
-			engine.engine(new SokobanProblem(), SearchStrategy.GREEDY);
+			if(strategy==SearchStrategy.IDDFS){
+				boolean flag=true;
+				for(long depth=5; flag; depth+=3){
+					flag=!engine.engine(problem, strategy, depth);
+					
+				}
+			}else
+				engine.engine(problem, strategy, Long.MAX_VALUE);
+			
 		} catch (StackOverflowError e) {
 			System.out.println("Solution (if any) too deep for stack.");
 		}
@@ -33,6 +48,10 @@ public class SokobanProblem implements GPSProblem {
 
 	@Override
 	public GPSState getInitState() {
+		return initState;
+	}
+	
+	private void initializeState() {
 		Scanner s = new Scanner(System.in);
 		int rows = s.nextInt();
 		int columns = s.nextInt();
@@ -53,7 +72,7 @@ public class SokobanProblem implements GPSProblem {
 		if (playerPosition == null) {
 			System.err.println("Player position not found.");
 		}
-		return new SokobanState(map, playerPosition);
+		initState = new SokobanState(map, playerPosition);
 	}
 
 	private Square getSquare(char squareChar) {
