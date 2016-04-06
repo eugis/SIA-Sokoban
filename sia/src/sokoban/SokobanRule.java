@@ -20,7 +20,6 @@ public class SokobanRule implements GPSRule {
 
 	@Override
 	public String getName() {
-		
 		return "Move "+dir.toString();
 	}
 
@@ -28,8 +27,7 @@ public class SokobanRule implements GPSRule {
 	public GPSState evalRule(GPSState state) throws NotAppliableException {
 		SokobanState ss = (SokobanState) state;
 		SokobanState clone = ss.clone();
-		clone.move(dir);
-		return clone;
+		return clone.move(dir);
 	}
 
 }

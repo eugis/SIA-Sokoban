@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import model.Square;
-import sokoban.SokobanState;
+import sokoban.SokobanExpandedState;
 
 public class Hungarian {
 	
-
-	public static int solveAssignmentProblem(SokobanState ss){
+	
+	public static int solveAssignmentProblem(SokobanExpandedState ss){
 		
 		Square[][] board = ss.getBoard();
 		int rows = board.length;

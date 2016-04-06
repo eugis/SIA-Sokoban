@@ -58,7 +58,7 @@ public abstract class GPSEngine {
 					System.out.println("Solution cost: " + currentNode.getCost());
 					System.out.println("Solution time: "+(System.currentTimeMillis()-initTime)+" ms");
 				} else {
-					analyzedCounter++;
+					explosionCounter++;
 					if (explosionCounter % 5000 == 0) {
 						System.out.println(explosionCounter);
 						System.out.println("Intermedio");
@@ -107,7 +107,7 @@ public abstract class GPSEngine {
 	}
 
 	private boolean isBest(GPSState state, Integer cost) {
-		explosionCounter++;
+		analyzedCounter++;
 		return !bestCosts.containsKey(state) || cost < bestCosts.get(state);
 	}
 

@@ -5,8 +5,6 @@ import java.util.PriorityQueue;
 
 import gps.GPSEngine;
 import gps.GPSNode;
-import gps.SearchStrategy;
-import gps.api.GPSProblem;
 
 class SokobanEngine extends GPSEngine {
 	
@@ -34,9 +32,4 @@ class SokobanEngine extends GPSEngine {
 			}
 		});
 	}
-	
-	private int getCost(GPSNode node) {
-		return node.getCost();
-	}
-
 }
