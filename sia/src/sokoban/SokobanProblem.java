@@ -41,6 +41,8 @@ public class SokobanProblem implements GPSProblem {
 			
 		} catch (StackOverflowError e) {
 			System.out.println("Solution (if any) too deep for stack.");
+		} catch (OutOfMemoryError e) {
+			System.out.println("Solution (if any) too deep for memory.");
 		}
 		/*SokobanProblem a = new SokobanProblem();
 		System.out.println(a.getHValue(a.getInitState()));*/

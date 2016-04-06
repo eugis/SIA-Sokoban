@@ -36,16 +36,7 @@ class SokobanEngine extends GPSEngine {
 	}
 	
 	private int getCost(GPSNode node) {
-		int cost = node.getCost();
-		/*SokobanState state = (SokobanState) node.getState();
-		for (Square[] squareLine: state.getBoard()) {
-			for (Square square: squareLine) {
-				if (square.isGoal() && square.isBox()) {
-					cost -= 100;
-				}
-			}
-		}*/
-		return cost;
+		return node.getCost();
 	}
 
 }
