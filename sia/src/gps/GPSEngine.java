@@ -29,6 +29,10 @@ public abstract class GPSEngine {
 		analyzedCounter = 0;
 	}
 	
+	public boolean engine(GPSProblem myProblem, SearchStrategy myStrategy){
+		return engine(myProblem, myStrategy, Long.MAX_VALUE);
+	}
+	
 	public boolean engine(GPSProblem myProblem, SearchStrategy myStrategy, long depth) {
 		open.clear();
 		bestCosts.clear();

@@ -74,6 +74,8 @@ public class SokobanProblem implements GPSProblem {
 					return Hungarian.solveAssignmentProblem(ss);
 				}
 			};
+		default:
+			SokobanExpandedState.h = (s) -> 0;
 		}
 		engine = new SokobanEngine();
 		SokobanProblem problem = new SokobanProblem();
@@ -81,12 +83,12 @@ public class SokobanProblem implements GPSProblem {
 		try {
 			if (strategy == SearchStrategy.IDDFS) {
 				boolean flag = true;
-				for (long depth = 5; flag; depth += 3) {
+				for (long depth = 1; flag; depth += 1) {
 					flag = !engine.engine(problem, strategy, depth);
 
 				}
 			} else
-				engine.engine(problem, strategy, Long.MAX_VALUE);
+				engine.engine(problem, strategy);
 
 		} catch (StackOverflowError e) {
 			System.out.println("Solution (if any) too deep for stack.");
