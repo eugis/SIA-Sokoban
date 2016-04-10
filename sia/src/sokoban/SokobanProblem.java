@@ -3,6 +3,7 @@ package sokoban;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.ObjectInputStream.GetField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,42 +36,48 @@ public class SokobanProblem implements GPSProblem {
 	 */
 	public static void main(String[] args) {
 		if (args.length < 2 || args.length > 3) {
-			System.out
-					.println("Argumentos: tablero tipoDeBusqueda [heuristica]");
+			System.err
+					.println("Error en los argumentos: tablero tipoDeBusqueda [heuristica]");
 			System.out
 					.println("Tipo de busqueda:\n1)\tbfs\n2)\tdfs\n3)\tiddfs\n4)\tgreedy\n5)\tasstar\n");
 			return;
 		}
 		board = Integer.valueOf(args[0]);
 		int search = Integer.valueOf(args[1]);
-		int heuristic=0;
+		int heuristic = 0;
 		try {
 			board = Integer.valueOf(args[0]);
 			search = Integer.valueOf(args[1]);
 			if (search == 4 || search == 5) {
 				heuristic = Integer.valueOf(args[2]);
-				if(heuristic<1 || heuristic>2)
+				if (heuristic < 1 || heuristic > 3)
 					throw new Exception();
 			}
-			if(board<1 || search<1 || search>5)
+			if (board < 1 || search < 1 || search > 5)
 				throw new Exception();
 		} catch (Exception e) {
-			System.out.println("Argumentos invalidos");
+			System.err.println("Argumentos invalidos");
 			return;
 		}
-		SearchStrategy strategy = SearchStrategy.values()[search-1];
-		if(heuristic==1)
-			SokobanExpandedState.h=new SokobanHeuristic();
-		else
-			SokobanExpandedState.h=new Heuristic() {
+		SearchStrategy strategy = SearchStrategy.values()[search - 1];
+		switch (heuristic) {
+		case 1:
+			SokobanExpandedState.h = new SokobanHeuristic();
+			break;
+		case 3:
+			SokobanExpandedState.h = new SokobanHeuriticNoAdmisible();
+			break;
+		case 2:
+			SokobanExpandedState.h = new Heuristic() {
 				@Override
 				public int getHValue(SokobanExpandedState ss) {
 					return Hungarian.solveAssignmentProblem(ss);
 				}
 			};
+		}
 		engine = new SokobanEngine();
 		SokobanProblem problem = new SokobanProblem();
-		
+
 		try {
 			if (strategy == SearchStrategy.IDDFS) {
 				boolean flag = true;
@@ -101,7 +108,7 @@ public class SokobanProblem implements GPSProblem {
 	private void initializeState() {
 		Scanner s = null;
 		try {
-			s = new Scanner(new File("boards/board-"+board));
+			s = new Scanner(new File("boards/board-" + board));
 		} catch (FileNotFoundException e) {
 			System.err.println("Archivo no encotrado");
 			return;
