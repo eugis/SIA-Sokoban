@@ -20,7 +20,7 @@ public class SokobanExpandedState {
 	
 	public SokobanExpandedState(SokobanState ss) {
 		board = Copies.deepCopy(StaticBoard.getBoard());
-		playerPosition = ss.getPlayerPosition();
+		playerPosition = new Point(ss.getPlayerPosition());
 		board[playerPosition.x][playerPosition.y].setPlayer();
 		for(Point p : ss.getBoxes()){
 			board[p.x][p.y].setBox();

@@ -26,8 +26,7 @@ public class SokobanRule implements GPSRule {
 	@Override
 	public GPSState evalRule(GPSState state) throws NotAppliableException {
 		SokobanState ss = (SokobanState) state;
-		SokobanState clone = ss.clone();
-		return clone.move(dir);
+		return ss.move(dir);
 	}
 
 }
