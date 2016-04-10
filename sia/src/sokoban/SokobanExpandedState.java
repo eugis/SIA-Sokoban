@@ -1,11 +1,13 @@
 package sokoban;
 
-import java.awt.Point;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
 import gps.exception.NotAppliableException;
+
+import java.awt.Point;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 import model.Direction;
 import model.Square;
 import utils.Copies;
@@ -83,7 +85,7 @@ public class SokobanExpandedState {
 	}
 	
 	public SokobanState getSokobanState() {
-		List<Point> boxes = new LinkedList<Point>();
+		Set<Point> boxes = new HashSet<Point>();
 		for(int i=0; i<board.length; i++){
 			for(int j=0; j<board[0].length; j++){
 				if(board[i][j].isBox()){
@@ -91,7 +93,7 @@ public class SokobanExpandedState {
 				}
 			}
 		}
-		return new SokobanState(playerPosition, boxes, getHValue2());
+		return new SokobanState(playerPosition, boxes, getHValue());
 	}
 	
 	private int getHValue2(){

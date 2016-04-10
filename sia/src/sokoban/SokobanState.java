@@ -1,20 +1,21 @@
 package sokoban;
 
-import java.awt.Point;
-import java.util.LinkedList;
-import java.util.List;
-
 import gps.api.GPSState;
 import gps.exception.NotAppliableException;
+
+import java.awt.Point;
+import java.util.HashSet;
+import java.util.Set;
+
 import model.Direction;
 
 public class SokobanState implements GPSState {
 
-	private List<Point> boxes;
+	private Set<Point> boxes;
 	private Point playerPosition;
 	private int heuristicValue;
 
-	public SokobanState(Point playerPosition, List<Point> boxes, int heuristicValue) {
+	public SokobanState(Point playerPosition, Set<Point> boxes, int heuristicValue) {
 		this.boxes = boxes;
 		this.playerPosition = playerPosition;
 		this.heuristicValue = heuristicValue;
@@ -55,11 +56,6 @@ public class SokobanState implements GPSState {
 		return heuristicValue;
 	}
 
-	@Override
-	public SokobanState clone() {
-		return new SokobanState(new Point(playerPosition.x, playerPosition.y), new LinkedList<Point>(boxes), heuristicValue);
-	}
-
 	public SokobanState move(Direction dir) throws NotAppliableException{
 		SokobanExpandedState ses = new SokobanExpandedState(this);
 		ses.move(dir);
@@ -70,7 +66,7 @@ public class SokobanState implements GPSState {
 		return playerPosition;
 	}
 	
-	public List<Point> getBoxes(){
+	public Set<Point> getBoxes(){
 		return boxes;
 	}
 
