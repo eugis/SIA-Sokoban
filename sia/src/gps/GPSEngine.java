@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
+import sokoban.SokobanState;
+
 public abstract class GPSEngine {
 
 	protected Queue<GPSNode> open;
@@ -58,10 +60,11 @@ public abstract class GPSEngine {
 					printStatus();
 				} else {
 					explosionCounter++;
-					if (explosionCounter % 5000 == 0) {
-						System.out.println(explosionCounter);
-						System.out.println("Intermedio");
+					if (explosionCounter % 50000 == 0) {
+						printStatus();
 						System.out.println(currentNode.getState());
+						System.out.println(currentNode.getCost());
+						System.out.println("Heuristica: "+((SokobanState)currentNode.getState()).getH());
 					}
 					explode(currentNode);
 				}

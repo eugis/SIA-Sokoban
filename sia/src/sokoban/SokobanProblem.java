@@ -74,6 +74,7 @@ public class SokobanProblem implements GPSProblem {
 					return Hungarian.solveAssignmentProblem(ss);
 				}
 			};
+			break;
 		default:
 			SokobanExpandedState.h = (s) -> 0;
 		}

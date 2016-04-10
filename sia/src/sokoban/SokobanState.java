@@ -13,9 +13,9 @@ public class SokobanState implements GPSState {
 
 	private Set<Point> boxes;
 	private Point playerPosition;
-	private int heuristicValue;
+	private Integer heuristicValue;
 
-	public SokobanState(Point playerPosition, Set<Point> boxes, int heuristicValue) {
+	public SokobanState(Point playerPosition, Set<Point> boxes, Integer heuristicValue) {
 		this.boxes = boxes;
 		this.playerPosition = playerPosition;
 		this.heuristicValue = heuristicValue;
