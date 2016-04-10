@@ -1,18 +1,14 @@
 package sokoban;
 
-import gps.exception.NotAppliableException;
-
 import java.awt.Point;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Set;
 
+import gps.exception.NotAppliableException;
 import model.Direction;
 import model.Heuristic;
 import model.Square;
 import utils.Copies;
-import utils.Hungarian;
 
 public class SokobanExpandedState {
 	

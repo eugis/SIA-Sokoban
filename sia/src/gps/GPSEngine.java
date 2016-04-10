@@ -49,14 +49,9 @@ public abstract class GPSEngine {
 				if (problem.isGoal(currentNode.getState())) {
 					finished = true;
 					System.out.println(currentNode.getSolution());
-
-					//TODO: parametro iniciales
-					System.out.println("Analyzed nodes: " + analyzedCounter);
-					System.out.println("Expanded nodes: " + explosionCounter);
-					System.out.println("Border nodes: " + open.size());
 					System.out.println("Solution deep: " + currentNode.getCost());
 					System.out.println("Solution cost: " + currentNode.getCost());
-					System.out.println("Solution time: "+(System.currentTimeMillis()-initTime)+" ms");
+					printStatus();
 				} else {
 					explosionCounter++;
 					if (explosionCounter % 5000 == 0) {
@@ -115,4 +110,10 @@ public abstract class GPSEngine {
 		bestCosts.put(node.getState(), node.getCost());
 	}
 
+	public void printStatus() {
+		System.out.println("Analyzed nodes: " + analyzedCounter);
+		System.out.println("Expanded nodes: " + explosionCounter);
+		System.out.println("Border nodes: " + open.size());
+		System.out.println("Solution time: "+(System.currentTimeMillis()-initTime)+" ms");
+	}
 }

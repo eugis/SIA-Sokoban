@@ -1,19 +1,17 @@
 package sokoban;
 
-import gps.GPSEngine;
-import gps.SearchStrategy;
-import gps.api.GPSProblem;
-import gps.api.GPSRule;
-import gps.api.GPSState;
-
 import java.awt.Point;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import gps.GPSEngine;
+import gps.SearchStrategy;
+import gps.api.GPSProblem;
+import gps.api.GPSRule;
+import gps.api.GPSState;
 import model.Direction;
 import model.Heuristic;
 import model.Square;
@@ -87,6 +85,7 @@ public class SokobanProblem implements GPSProblem {
 			System.out.println("Solution (if any) too deep for stack.");
 		} catch (OutOfMemoryError e) {
 			System.out.println("Solution (if any) too deep for memory.");
+			engine.printStatus();
 		}
 		/*
 		 * SokobanProblem a = new SokobanProblem();
