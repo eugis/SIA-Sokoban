@@ -1,0 +1,13 @@
+<project name="sia" default="Jar">  
+ <target name="Compile">
+ 	<mkdir dir="bin"/>
+ 	<javac srcdir="src" destdir="bin" />
+ </target>
+ <target name="Jar" depends="Compile">
+ 	<jar destfile="sia.jar" basedir="bin">
+  <manifest> 
+  <attribute name="Main-Class" value="sokoban.SokobanProblem"/>  
+  </manifest> 
+  </jar>  
+ </target>
+</project>
