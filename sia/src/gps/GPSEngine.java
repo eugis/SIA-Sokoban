@@ -60,12 +60,12 @@ public abstract class GPSEngine {
 					printStatus();
 				} else {
 					explosionCounter++;
-					if (explosionCounter % 50000 == 0) {
+				/*	if (explosionCounter % 50000 == 0) {
 						printStatus();
 						System.out.println(currentNode.getState());
-						System.out.println(currentNode.getCost());
+						System.out.println("Costo: "+currentNode.getCost());
 						System.out.println("Heuristica: "+((SokobanState)currentNode.getState()).getH());
-					}
+					}*/
 					explode(currentNode);
 				}
 			}

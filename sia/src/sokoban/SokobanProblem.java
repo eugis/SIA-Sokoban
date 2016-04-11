@@ -1,18 +1,18 @@
 package sokoban;
 
-import java.awt.Point;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.ObjectInputStream.GetField;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-
 import gps.GPSEngine;
 import gps.SearchStrategy;
 import gps.api.GPSProblem;
 import gps.api.GPSRule;
 import gps.api.GPSState;
+
+import java.awt.Point;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
 import model.Direction;
 import model.Heuristic;
 import model.Square;
@@ -80,7 +80,7 @@ public class SokobanProblem implements GPSProblem {
 		}
 		engine = new SokobanEngine();
 		SokobanProblem problem = new SokobanProblem();
-
+		System.out.println("Parametros utilizados: "+args[0]+" "+args[1]+""+(args.length==3?" "+args[2]:""));
 		try {
 			if (strategy == SearchStrategy.IDDFS) {
 				boolean flag = true;
@@ -124,8 +124,8 @@ public class SokobanProblem implements GPSProblem {
 		for (int i = 0; i < rows; i++) {
 			String nextLine = s.nextLine();
 			for (int j = 0; j < columns; j++) {
-				char nextChar = Character.toLowerCase(nextLine.charAt(j));
-				if (nextChar == 'p') {
+				char nextChar = nextLine.charAt(j);
+				if (nextChar == 'p' || nextChar=='P') {
 					playerPosition = new Point(i, j);
 				}
 				map[i][j] = getSquare(nextChar);
@@ -156,6 +156,7 @@ public class SokobanProblem implements GPSProblem {
 		case 'p':
 			return new Square(SquareType.Empty, true, false);
 		case 'g':
+		case 'G':
 			return new Square(SquareType.Goal, false, false);
 		default:
 			System.err.println("Error: Unknown character: " + squareChar);

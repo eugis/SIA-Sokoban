@@ -4,7 +4,6 @@ import gps.api.GPSState;
 import gps.exception.NotAppliableException;
 
 import java.awt.Point;
-import java.util.HashSet;
 import java.util.Set;
 
 import model.Direction;
@@ -13,9 +12,9 @@ public class SokobanState implements GPSState {
 
 	private Set<Point> boxes;
 	private Point playerPosition;
-	private Integer heuristicValue;
+	private int heuristicValue;
 
-	public SokobanState(Point playerPosition, Set<Point> boxes, Integer heuristicValue) {
+	public SokobanState(Point playerPosition, Set<Point> boxes, int heuristicValue) {
 		this.boxes = boxes;
 		this.playerPosition = playerPosition;
 		this.heuristicValue = heuristicValue;
